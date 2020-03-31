@@ -1,0 +1,13 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
