@@ -1,10 +1,18 @@
-POST http://localhost:4000/login
+POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
     "username":"robinat13",
     "password":"ezpz"
 }
+
+###
+
+POST http://localhost:4000/auth/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTgzNTJlOTRlZWVmYTJjZWMxNzhiNjciLCJpYXQiOjE1ODU2Njg1NTMsImV4cCI6MTU4NTY3MTU1M30.PLDS-Es1f6JO3wnEp5rJ4Da1RKvy2e-DuEAVaQvsJPk
+
+
 
 ###
 
@@ -36,7 +44,7 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:4000/posts/5e82e2c972642534a8aaad92
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTgyZDlmNzU2ZWZiZjVmZjg1YWQ2ZjYiLCJpYXQiOjE1ODU2MzM3OTAsImV4cCI6MTU4NTYzNjc5MH0.hQJKtgxz_tTSvDSIhZkHEyYspGrp2gW0Yyq3t3tT9Vg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTgzNTJlOTRlZWVmYTJjZWMxNzhiNjciLCJpYXQiOjE1ODU2Njc2NDV9.GW77berlb31l_aX4bB5NcXts1C8gOdIGRE_ct1vKPZU
 
 
 ###
@@ -48,4 +56,12 @@ Content-Type: application/json
     "name":"Robin",
     "username":"robinat13",
     "password":"ezpz"
+}
+
+###
+POST http://localhost:4000/auth/refresh-token
+Content-Type: application/json
+
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTgzNTJlOTRlZWVmYTJjZWMxNzhiNjciLCJpYXQiOjE1ODU2Njc2NDV9.GW77berlb31l_aX4bB5NcXts1C8gOdIGRE_ct1vKPZU"
 }
