@@ -5,11 +5,13 @@ const authRouter = require("./routes/auth");
 const registrationRouter = require("./routes/registration");
 const postsRouter = require("./routes/posts");
 const mongoose = require("mongoose");
+var cors = require("cors");
 
 require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const PORT = process.env.PORT || 4000;
 
 app.use("/auth", authRouter);

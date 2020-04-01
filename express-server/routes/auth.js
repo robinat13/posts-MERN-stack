@@ -110,7 +110,7 @@ router.post("/logout", authenticateToken, async (req, res) => {
 
 function generateToken(id) {
   return jwt.sign({ userId: id }, process.env.JWT_SECRET_TOKEN_KEY, {
-    expiresIn: "50m"
+    expiresIn: "5m"
   });
 }
 

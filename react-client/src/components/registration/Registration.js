@@ -1,50 +1,49 @@
 import React, { useState } from "react";
-import styles from "./login.module.css";
+import styles from "./registration.module.css";
 import { Card, Form, Button } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { postCall } from "../../api-utils/apiCalls";
-import { useDispatch } from "react-redux";
-import { authorize } from "../../actions/authorization";
 
 const initialFormState = {
+  name: "",
   username: "",
   password: ""
 };
 
-const Login = () => {
+const Registration = () => {
   const [formState, setFormState] = useState(initialFormState);
-
-  const dispatchAction = useDispatch();
-  const history = useHistory();
 
   const handleChange = e => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
+  console.log("render");
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const response = await postCall("auth/login", formState);
-
-    if (response.type === "SUCCESS")
-      dispatchAction(
-        authorize({
-          token: response.data.token,
-          refreshToken: response.data.refreshToken
-        })
-      );
-    history.push("/posts");
+    const response = await postCall("registration", formState);
+    console.log(response);
   };
 
   return (
     <div className={styles["parent-container"]}>
       <Card className="w-25">
         <Card.Header>
-          <Card.Title>Login</Card.Title>
+          <Card.Title>Registration</Card.Title>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group>
-              <Form.Label>Username</Form.Label>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                name="name"
+                value={formState.name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter Username"
@@ -65,14 +64,14 @@ const Login = () => {
             </Form.Group>
             <div className="text-center">
               <Button variant="outline-primary" block type="submit">
-                Login
+                Register
               </Button>
             </div>
           </Form>
           <div className="text-center mt-3">
-            New user ?{" "}
-            <Link to="registration">
-              <span className="text-info">Register yourself</span>
+            Have an account ?{" "}
+            <Link to="/">
+              <span className="text-info">Login</span>
             </Link>
           </div>
         </Card.Body>
@@ -81,4 +80,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;
