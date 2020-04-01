@@ -7,7 +7,31 @@ const mongoose = require("mongoose");
 router.get("/", authenticateToken, async (req, res) => {
   let posts = [];
   if (req.user) {
-    posts = await Post.find({ userId: req.user.userId });
+    try {
+      posts = await Post.find({ userId: req.user.userId });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ message: "Internal Server Error", err: err });
+    }
+    if (!posts) {
+      res.status(200).json([]);
+    } else {
+      res.status(200).json(posts);
+    }
+  }
+});
+
+router.get("/all", authenticateToken, async (req, res) => {
+  let posts = [];
+  if (req.user) {
+    try {
+      posts = await Post.find({});
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ message: "Internal Server Error", err: err });
+    }
     if (!posts) {
       res.status(200).json([]);
     } else {

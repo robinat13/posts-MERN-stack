@@ -120,6 +120,45 @@ export const patchCall = async (endpoint, payload, withToken = false) => {
   }
 };
 
+export const deleteCall = async (endpoint, withToken = false) => {
+  if (withToken) {
+    const jwtToken = store.getState().authorization.token;
+    const refreshToken = store.getState().authorization.refreshToken;
+
+    if (jwtToken && refreshToken) {
+      const validatedToken = await verifyJwtOrRehydrate(jwtToken, refreshToken);
+      if (validatedToken.type === "SUCCESS") {
+        store.dispatch(
+          authorize({
+            token: validatedToken.data,
+            refreshToken: refreshToken
+          })
+        );
+      } else if (validatedToken.type === "ERROR") {
+        store.dispatch(deauthorize());
+        return;
+      }
+      try {
+        const response = await axios.delete(`${BASE_URL}${endpoint}`, {
+          headers: { Authorization: `Bearer ${validatedToken.data}` }
+        });
+        return { type: "SUCCESS", data: response.data };
+      } catch (err) {
+        return { type: "ERROR", data: err };
+      }
+    } else {
+      return { type: "INVALID_AUTH" };
+    }
+  } else {
+    try {
+      const response = await axios.delete(`${BASE_URL}${endpoint}`);
+      return { type: "SUCCESS", data: response.data };
+    } catch (err) {
+      return { type: "ERROR", data: err };
+    }
+  }
+};
+
 const verifyJwtOrRehydrate = async (jwtToken, refreshToken) => {
   const decodedJwt = jwt.decode(jwtToken);
   const current_time = new Date().getTime() / 1000;

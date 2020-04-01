@@ -5,6 +5,8 @@ import Login from "./components/login/Login";
 import Registration from "./components/registration/Registration";
 import { ProtectedRoutes } from "./protectedRoutes";
 import Posts from "./components/posts";
+import MyPosts from "./components/posts/MyPosts";
+import AllPosts from "./components/posts/AllPosts";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" exact component={Login} />
           <Route path="/registration" component={Registration} />
           <ProtectedRoutes path="/posts" component={Posts} />
+          <ProtectedRoutes path="/my-posts" component={MyPosts} />
+          <ProtectedRoutes path="/all-posts" component={AllPosts} />
         </Switch>
       </Router>
     </div>
