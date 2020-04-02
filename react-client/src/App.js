@@ -7,6 +7,12 @@ import { ProtectedRoutes } from "./protectedRoutes";
 import Posts from "./components/posts";
 import MyPosts from "./components/posts/MyPosts";
 import AllPosts from "./components/posts/AllPosts";
+import { toast } from "react-toastify";
+
+toast.configure({
+  draggable: false,
+  autoClose: 7000
+});
 
 function App() {
   return (

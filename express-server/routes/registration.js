@@ -5,8 +5,6 @@ const User = require("../models/User");
 const getUser = require("../routes/lib/getUser");
 
 router.post("/", getUser, async (req, res) => {
-  console.log("REGISTRATION ENDPOINT CALLED");
-
   if (res.user) {
     return res.status(400).json({
       message: `User already exists with username - ${req.body.username}`

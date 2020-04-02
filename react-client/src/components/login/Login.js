@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./login.module.css";
 import { Card, Form, Button } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { postCall } from "../../api-utils/apiCalls";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authorize } from "../../actions/authorization";
 
 const initialFormState = {
@@ -13,26 +13,39 @@ const initialFormState = {
 
 const Login = () => {
   const [formState, setFormState] = useState(initialFormState);
-
   const dispatchAction = useDispatch();
   const history = useHistory();
+
+  const authorized = useSelector(state => state.authorization.authorized);
+
+  useEffect(() => {
+    if (authorized) {
+      history.push("posts");
+    }
+    // eslint-disable-next-line
+  }, [authorized]);
 
   const handleChange = e => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async e => {
+    let response;
     e.preventDefault();
-    const response = await postCall("auth/login", formState);
-
-    if (response.type === "SUCCESS")
+    try {
+      response = await postCall("auth/login", formState);
+    } catch (err) {
+      console.log(err);
+    }
+    if (response.type === "SUCCESS") {
       dispatchAction(
         authorize({
           token: response.data.token,
           refreshToken: response.data.refreshToken
         })
       );
-    history.push("/posts");
+      history.push("/posts");
+    }
   };
 
   return (

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./registration.module.css";
 import { Card, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { postCall } from "../../api-utils/apiCalls";
+import { useSelector } from "react-redux";
 
 const initialFormState = {
   name: "",
@@ -16,7 +17,15 @@ const Registration = () => {
   const handleChange = e => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
-  console.log("render");
+  const authorized = useSelector(state => state.authorization.authorized);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (authorized) {
+      history.push("posts");
+    }
+    // eslint-disable-next-line
+  }, [authorized]);
 
   const handleSubmit = async e => {
     e.preventDefault();
