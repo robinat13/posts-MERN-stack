@@ -1,6 +1,6 @@
 # POSTS
 
-This is a sample application developed while the learning phase of the Mongo Db and Express js.
+This is a sample application developed while the learning phase of Mongo Db and Express js.
 
 The App allows a user to Sign up and Login.
 After success login the user can write a post, edit and delete it. The user can also go to Public section where he can see all of the posts made by different users.
